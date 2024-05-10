@@ -32,7 +32,7 @@ private ProductRepository productRepository;
         Product product = new Product();
         product.setName(saveProduct.getName());
         product.setPrice(saveProduct.getPrice());
-        product.setSatus(Product.ProductSatus.ENABLED);
+        product.setStatus(Product.ProductSatus.ENABLED);
         Category category = new Category();
         category.setId(saveProduct.getCategoryId());
         product.setCategory(category);
@@ -56,7 +56,7 @@ private ProductRepository productRepository;
     public Product disableOneById(Long productId) {
         Product productFromDB = productRepository.findById(productId)
                 .orElseThrow(() -> new ObjectNotFoundException("Product with id " + productId + " not found"));
-        productFromDB.setSatus(Product.ProductSatus.DISABLED);
+        productFromDB.setStatus(Product.ProductSatus.DISABLED);
         return productRepository.save(productFromDB);
     }
 }

@@ -12,7 +12,8 @@ public class Product {
     private String name;
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
-    private ProductSatus satus;
+    private ProductSatus status;
+
     public static enum ProductSatus {
         ENABLED, DISABLED;
     }
@@ -44,12 +45,12 @@ public class Product {
         this.price = price;
     }
 
-    public ProductSatus getSatus() {
-        return satus;
+    public ProductSatus getStatus() {
+        return status;
     }
 
-    public void setSatus(ProductSatus satus) {
-        this.satus = satus;
+    public void setStatus(ProductSatus status) {
+        this.status = status;
     }
 
     public Category getCategory() {
