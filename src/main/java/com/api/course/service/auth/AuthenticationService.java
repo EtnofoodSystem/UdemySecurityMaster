@@ -7,6 +7,9 @@ import com.api.course.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AuthenticationService {
     @Autowired
@@ -21,8 +24,18 @@ public class AuthenticationService {
         userDto.setName(user.getName());
         userDto.setUsername(user.getUsername());
         userDto.setRole(user.getRole().name());
-        String jwt = jwtService.generatedToken(user);
+        String jwt = jwtService.generatedToken(user, generateExtraclaims(user));
         userDto.setJwt(jwt);
         return userDto;
     }
+
+    private Map<String, Object> generateExtraclaims(User user) {
+        Map<String, Object> extraclaims = new HashMap<>();
+        extraclaims.put("name", user.getId());
+        extraclaims.put("role", user.getRole().name());
+        extraclaims.put("authorities", user.getAuthorities());
+        return extraclaims;
+    }
+
+
 }

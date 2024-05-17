@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     public User registrOneCustomer(SaveUser newUser) {
         validationPassword(newUser);
         User user = new User();
-        user.setName(newUser.getName());
         user.setUsername(newUser.getUsername());
+        user.setName(newUser.getName());
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
         user.setRole(Role.ROLE_CUSTOMER);
         return userRepository.save(user);
