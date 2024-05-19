@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -18,8 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     @Autowired
     AuthenticationService authenticationService;
+    @GetMapping("/validate")
+    public ResponseEntity<Boolean> validate(@RequestParam String jwt){
+        boolean isTokenValid = authenticationService.validateToken(jwt);
+        return  ResponseEntity.ok(isTokenValid);
+    }
     @PostMapping("/authenticate")
-    ResponseEntity<AuthenticationResponse> aunthenticate(
+    public ResponseEntity<AuthenticationResponse> aunthenticate(
             @RequestBody @Valid AuthenticationRequest authenticationRequest){
         AuthenticationResponse rsp = authenticationService.login(authenticationRequest);
         return ResponseEntity.ok(rsp);

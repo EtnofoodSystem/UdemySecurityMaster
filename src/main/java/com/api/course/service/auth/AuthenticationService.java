@@ -59,4 +59,14 @@ public class AuthenticationService {
         authResponse.setJwt(jwt);
         return authResponse;
     }
+
+    public boolean validateToken(String jwt) {
+        try {
+            jwtService.extractUsername(jwt);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
 }
