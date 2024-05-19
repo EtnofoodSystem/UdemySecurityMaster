@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,17 +28,20 @@ public class JwtService {
         Date issuedAt = new Date(System.currentTimeMillis());
         Date expiration = new Date(issuedAt.getTime() + (EXPIRATION_IN_MINUTES * 60 * 1000));
         String jwt =Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(user.getUsername())
-                .setIssuedAt(issuedAt)
-                .setExpiration(expiration)
-                .setHeaderParam(Header.TYPE,Header.JWT_TYPE)
-                .signWith(generatedKey(), SignatureAlgorithm.HS256)
+                .header()
+                .type("JWT")
+                .and()
+                .subject(user.getUsername())
+                .issuedAt(issuedAt)
+                .expiration(expiration)
+                .claims(extraClaims)
+                .signWith(generatedKey(),Jwts.SIG.HS256)
                 .compact();
+
         return jwt;
     }
 
-    private Key generatedKey() {
+    private SecretKey generatedKey() {
         byte[] passwordDecoded = Decoders.BASE64.decode(SECRET_KEY);
         System.out.println(new String(passwordDecoded));
         return Keys.hmacShaKeyFor(passwordDecoded);
@@ -48,7 +52,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String jwt) {
-       return Jwts.parser().setSigningKey(generatedKey()).build()
-                .parseClaimsJws(jwt).getBody();
+       return Jwts.parser().verifyWith(generatedKey()).build()
+                .parseSignedClaims(jwt).getPayload();
     }
 }
