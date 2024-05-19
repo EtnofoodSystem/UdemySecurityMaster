@@ -23,7 +23,7 @@ public class HttpSecurityConfig {
                  .authorizeHttpRequests(authReqConfig ->{
                      authReqConfig.requestMatchers(HttpMethod.POST,"/customer").permitAll();
                      authReqConfig.requestMatchers(HttpMethod.POST,"/auth/authenticate").permitAll();
-                     authReqConfig.requestMatchers(HttpMethod.GET,"/auth/validate").permitAll();
+                     authReqConfig.requestMatchers(HttpMethod.GET,"/auth/validate-token").permitAll();
                      authReqConfig.anyRequest().authenticated();
 
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
     @Autowired
     AuthenticationService authenticationService;
-    @GetMapping("/validate")
+    @GetMapping("/validate-token")
     public ResponseEntity<Boolean> validate(@RequestParam String jwt){
         boolean isTokenValid = authenticationService.validateToken(jwt);
         return  ResponseEntity.ok(isTokenValid);

@@ -1,3 +1,8 @@
+-- CREACION DE USUARIOS
+INSERT INTO "user" (username, name, password, role) VALUES ('lmarquez', 'luis márquez', '$2a$10$pj/fA1gvuBeCwWnPypG/GeHzFyHIx0AGIwDUEltZL5ImHi5UAU/j.', 'ROLE_CUSTOMER');
+INSERT INTO "user" (username, name, password, role) VALUES ('fperez', 'fulano pérez', '$2a$10$BvXdPhVHSbm8DZwEyuHVtOM/E7HcWt.WdVHGlyvKr7P7skX4MIqpe', 'ROLE_ASSISTANT_ADMIN');
+INSERT INTO "user" (username, name, password, role) VALUES ('mhernandez', 'mengano hernández', '$2a$10$/wfEyZ4.MX7EKYFpV6RucuOxFIgnTeIaGbDjM1CDJM67FUeWZ.z1m', 'ROLE_ADMIN');
+
 -- CREACIÓN DE CATEGORIAS
 INSERT INTO category (name, status) VALUES ('Electrónica', 'ENABLED');
 INSERT INTO category (name, status) VALUES ('Ropa', 'ENABLED');

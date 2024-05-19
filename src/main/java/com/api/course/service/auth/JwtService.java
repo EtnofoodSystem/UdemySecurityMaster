@@ -1,6 +1,7 @@
 package com.api.course.service.auth;
 
 import com.api.course.entity.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -40,5 +41,14 @@ public class JwtService {
         byte[] passwordDecoded = Decoders.BASE64.decode(SECRET_KEY);
         System.out.println(new String(passwordDecoded));
         return Keys.hmacShaKeyFor(passwordDecoded);
+    }
+
+    public String extractUsername(String jwt) {
+        return extractAllClaims(jwt).getSubject();
+    }
+
+    private Claims extractAllClaims(String jwt) {
+       return Jwts.parser().setSigningKey(generatedKey()).build()
+                .parseClaimsJws(jwt).getBody();
     }
 }
