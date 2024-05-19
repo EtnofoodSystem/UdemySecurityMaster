@@ -21,7 +21,7 @@ public class HttpSecurityConfig {
                  .sessionManagement(sessMagConfig ->sessMagConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                  .authenticationProvider(daoAuthenticationProvider)
                  .authorizeHttpRequests(authReqConfig ->{
-                     authReqConfig.requestMatchers(HttpMethod.POST,"/customers").permitAll();
+                     authReqConfig.requestMatchers(HttpMethod.POST,"/customer").permitAll();
                      authReqConfig.requestMatchers(HttpMethod.POST,"/auth/**").permitAll();
                      authReqConfig.anyRequest().authenticated();
 
