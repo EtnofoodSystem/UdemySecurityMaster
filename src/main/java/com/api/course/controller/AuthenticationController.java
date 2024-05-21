@@ -2,6 +2,7 @@ package com.api.course.controller;
 
 import com.api.course.dto.AuthenticationRequest;
 import com.api.course.dto.AuthenticationResponse;
+import com.api.course.entity.User;
 import com.api.course.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
@@ -25,5 +26,10 @@ public class AuthenticationController {
             @RequestBody @Valid AuthenticationRequest authenticationRequest){
         AuthenticationResponse rsp = authenticationService.login(authenticationRequest);
         return ResponseEntity.ok(rsp);
+    }
+    @GetMapping("/profile")
+    public ResponseEntity<User> findMyProfile(){
+        User user = authenticationService.findLoggerInUser();
+        return  ResponseEntity.ok(user);
     }
 }

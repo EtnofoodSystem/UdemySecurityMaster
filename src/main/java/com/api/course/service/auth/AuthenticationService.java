@@ -5,6 +5,7 @@ import com.api.course.dto.AuthenticationResponse;
 import com.api.course.dto.RegisteredUser;
 import com.api.course.dto.SaveUser;
 import com.api.course.entity.User;
+import com.api.course.exception.ObjectNotFoundException;
 import com.api.course.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -68,6 +69,17 @@ public class AuthenticationService {
             System.out.println(e.getMessage());
             return false;
         }
+
+    }
+
+    public User findLoggerInUser() {
+       UsernamePasswordAuthenticationToken auth =
+               (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
+           String username = (String)auth.getPrincipal();
+           return userService.findOneByUsername(username)
+                   .orElseThrow(() -> new ObjectNotFoundException("User not found. Username :"+username));
+
 
     }
 }

@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     UserService userService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("ENTRO EN EL FILTRO JWT AUTHENTICATION");
         //1._OBTENER ENCABEZADO HTTP LLAMADO AUTORIZACION
         String authorizationHeader = request.getHeader("Authorization");
         if(!StringUtils.hasText(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")){
@@ -41,6 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .orElseThrow(() -> new ObjectNotFoundException("User not found. Username: "+username));
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 username, null,user.getAuthorities());
+        authToken.setDetails(new WebAuthenticationDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authToken);
         //5._EJECUTAR EL REGISTRO DEFILTROS
         filterChain.doFilter(request, response);

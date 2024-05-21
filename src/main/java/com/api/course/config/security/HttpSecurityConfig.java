@@ -24,7 +24,7 @@ public class HttpSecurityConfig {
         SecurityFilterChain filterChain = http.csrf(csrfConfig -> csrfConfig.disable())
                  .sessionManagement(sessMagConfig ->sessMagConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                  .authenticationProvider(daoAuthenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                  .authorizeHttpRequests(authReqConfig ->{
                      authReqConfig.requestMatchers(HttpMethod.POST,"/customer").permitAll();
                      authReqConfig.requestMatchers(HttpMethod.POST,"/auth/authenticate").permitAll();
