@@ -50,7 +50,7 @@ public class CategoryController {
         return ResponseEntity.ok(category);
 
     }
-    @DeleteMapping("/{categoryId}/disable")
+    @DeleteMapping("/{categoryId}/disabled")
     public ResponseEntity<Category> disableOneById(@PathVariable Long categoryId) {
         Category category = categoryService.disableOneById(categoryId);
         return ResponseEntity.ok(category);

@@ -49,7 +49,7 @@ public class ProductController {
         return ResponseEntity.ok(product);
 
     }
-    @DeleteMapping("/{productId}/disable")
+    @DeleteMapping("/{productId}/disabled")
     public ResponseEntity<Product> disableOneById(@PathVariable Long productId) {
         Product product = productService.disableOneById(productId);
         return ResponseEntity.ok(product);
